@@ -30,7 +30,7 @@ class PDFSentenceExtractor {
         sb.setLength(0);
         sb.append("\n");
         sb.append("******************************");
-        sb.append("Murali Date: ").append(PDFParser.filena).append("**********************").append("\n");
+        sb.append("Murali Date: ").append(PDFParser.fileProcessed).append("**********************").append("\n");
         int keyWordCount = 1;
         for(String result: finalSearchResult)
         {

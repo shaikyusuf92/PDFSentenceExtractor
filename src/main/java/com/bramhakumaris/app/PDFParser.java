@@ -10,12 +10,15 @@ import java.util.StringTokenizer;
 
 public class PDFParser {
 
+
     private StringBuilder stringBuilder = new StringBuilder();
     private  StringBuilder result = new StringBuilder();
     private  StringBuilder pdfReader = new StringBuilder();
-    protected static String filena = null;
+    static String fileProcessed = null;
+    private static FileUtils fileUtils = new FileUtils();
 
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private String pdfParser(String fileName) throws IOException {
 
         ClassLoader classLoader = getClass().getClassLoader();
@@ -55,19 +58,20 @@ public class PDFParser {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         PDFParser pdfParser = new PDFParser();
-        FileUtils fileUtils = new FileUtils();
         DocumentCreator documentCreator = new DocumentCreator();
         PDFSentenceExtractor pdfSentenceExtractor = new PDFSentenceExtractor();
         String keyWords[] = {"soul"};
-        List<String>filesList = fileUtils.getFilesList();
+        fileUtils.renameFilesInFolder();
+        List<String>filesList = FileUtils.getFilesList();
         System.out.println("Total Number of Files: " +filesList.size());
         System.out.println("\n");
 
                 for (String fileName : filesList) {
-                    filena = fileName;
-
+                    fileProcessed = fileName;
+                    if(fileName.contains(" "))
+                       fileName= fileName.replaceAll("\\s+", "");
                     System.out.println("Processing File: " + fileName);
                     pdfParser.pdfReader.setLength(0);
                     pdfParser.pdfReader.append(pdfParser.pdfParser(fileName));
@@ -76,6 +80,8 @@ public class PDFParser {
                     pdfParser.result.append(pdfSentenceExtractor.extractSentences(keyWords, stringTokenizer));
 
                 }
+
+
 
                 documentCreator.CreateParagraph(pdfParser.result.toString());
 
