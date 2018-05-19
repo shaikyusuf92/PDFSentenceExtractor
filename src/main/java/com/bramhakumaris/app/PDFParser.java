@@ -21,9 +21,7 @@ public class PDFParser {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private String pdfParser(String fileName) throws IOException {
 
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        File file = new File(classLoader.getResource(fileName).getFile());
+        File file = new File("src/main/resources/"+fileName);
         stringBuilder.setLength(0);
 
 
@@ -62,7 +60,7 @@ public class PDFParser {
         PDFParser pdfParser = new PDFParser();
         DocumentCreator documentCreator = new DocumentCreator();
         PDFSentenceExtractor pdfSentenceExtractor = new PDFSentenceExtractor();
-        String keyWords[] = {"soul"};
+        String keyWords[] = {"final","end","last"};
         fileUtils.renameFilesInFolder();
         List<String>filesList = FileUtils.getFilesList();
         System.out.println("Total Number of Files: " +filesList.size());
